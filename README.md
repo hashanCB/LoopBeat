@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎵 Song Player UI - Education & Testing Purpose
 
-## Getting Started
+This project is an **educational and testing purpose** website built using **Next.js**, **React**, and **various React tools**. It features a **song player UI** with interactive functionality.
 
-First, run the development server:
+## 🚀 Features
 
+✅ **Built with Next.js & React**  
+✅ **Styled using Tailwind CSS**  
+✅ **Music Player Functionalities:**
+   - Play/Pause songs
+   - Next/Back navigation
+   - Progress bar for song playback  
+✅ **Containerized with Docker**
+
+## 📌 Current Status
+- ✅ **UI Completed** using Tailwind CSS
+- 🔧 **Song player core functionalities implemented**
+- 🛠 **Further improvements in progress**
+
+## 🛠 Technologies Used
+- **Next.js** - For SSR and frontend framework
+- **React** - UI component-based development
+- **Tailwind CSS** - Fast and responsive styling
+- **Docker** - To containerize the application
+
+## 📦 Setup & Installation
+
+### 1️⃣ Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/song-player-ui.git
+cd song-player-ui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3️⃣ Run the Development Server
+```bash
+npm run dev
+```
+Then, open **http://localhost:3000** in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4️⃣ Run with Docker
+```bash
+# Build the Docker image
+docker build -t song-player .
 
-## Learn More
+# Run the container
+docker run -d -p 3000:3000 song-player
+```
 
-To learn more about Next.js, take a look at the following resources:
+Now visit **http://localhost:3000** to see the app in action. 🎶
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📌 TODOs
+- Improve song playlist features 🎼
+- Add user playlists and favorites ⭐
+- Implement API for fetching songs from a backend 🎧
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributions
+Feel free to **fork** this repo, open an **issue**, or submit a **pull request** to improve the project!
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📌 **Note:** This project is for **educational and testing purposes** only.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🎵 *Enjoy the music! 🎶*
+
