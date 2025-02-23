@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Bell,
@@ -22,21 +22,64 @@ import SongsList from '@/app/Data/SongsList'
 const BottomPlayer = () => {
   const [play,setplay] = useState(false)
   const [ploop,setPloop] = useState(true)
-  
+  const [prandom , setPrandom] = useState(false)
+  const Refsong = useRef()
+  const [duration,setduration] = useState(0)
+  const [fulltimeducation , setfulltimeducation] = useState()
+  const [remmeingtime , setremmeingtime] = useState(0)
   const SongsLists = SongsList()
-  const [next,setNext] = useState()
-  const [prev,serPrev] = useState()
   const [currentsoung , setCurrentsoung] = useState(0)
 
+  const random  = () =>{
+    setPrandom(!prandom)
+    // let SongCount = SongsLists.length
+    // let randomvalues = Math.random() * (SongCount - 1)
+    // setCurrentsoung(randomvalues.toFixed(0))
+    // setplay(true)
+  }
+
+  const dragsong_prograssbar = (val) =>{
+    const dragduration =  Refsong.current.duration()
+    const dragtime =  (val/100)* dragduration
+    Refsong.current.seek(dragtime)
+    setduration(val)
+    console.log(val)
+  }
+
+  useEffect(()=>{
+    const time = setInterval(() => {
+      const seek = Refsong.current.seek() || 0; // Get current time
+      const durations = Refsong.current.duration() || 0; // Get current time
+      const progressbar = (seek / durations ) * 100
+      setduration(progressbar)
+      setfulltimeducation(timecovnate(durations))
+      setremmeingtime(timecovnate(seek))
+      console.log(durations)
+    }, 500);
+
+    return () => clearInterval(time)
+  
+  })
+
+  const timecovnate = (time) =>{
+    const min = (time/60).toFixed(2)
+    const arr = min.split(".")
+    const min2 = arr.join(":")
+    return min2
+  }
+
+
+
   const nextSong = () =>{
+    console.log("ok next")
     let SongCount = SongsLists.length
     SongCount = SongCount - 1
     if ( currentsoung < SongCount){
-      console.log("ok next")
+      
       setCurrentsoung(currentsoung+1)
       
     }else{
-      console.log("no next")
+    
       setCurrentsoung(0)
     }
    setplay(true)
@@ -79,9 +122,11 @@ const BottomPlayer = () => {
 
     <div className="flex-1 flex flex-col items-center gap-2">
       <div className="flex items-center gap-6">
-        <Button variant="ghost" size="icon">
+
+        <Button variant={prandom ?"ploop" : "ghost"}size="icon" onClick={()=>random()}>
           <Shuffle className="w-4 h-4" />
         </Button>
+
         {/* back song */}
         <Button variant="ghost" onClick={()=>backSong()} size="icon">
           <ChevronLeft className="w-4 h-4" />
@@ -122,22 +167,23 @@ const BottomPlayer = () => {
 
       </div>
       <div className="flex items-center gap-2 w-full max-w-xl">
-        <div className="text-xs text-zinc-400">1:45</div>
-        <Slider defaultValue={[40]} max={100} step={1} className="w-full" />
-        <div className="text-xs text-zinc-400">4:42</div>
+        <div className="text-xs text-zinc-400">{remmeingtime}</div>
+        <Slider value={[duration]} max={100} step={4} className="w-full" onValueChange={(val) => dragsong_prograssbar(val)} />
+        <div className="text-xs text-zinc-400">{fulltimeducation}</div>
       </div>
     </div>
 
     <div className="w-72 flex items-center justify-end gap-2">
       <Volume2 className="w-4 h-4" />
-      <Slider defaultValue={[60]} max={100} step={1} className="w-32" />
+      <Slider defaultValue={[60]} max={100} step={1} className="w-32"  />
     </div>
 
     <ReactHowler 
         src={SongsLists[currentsoung].url}
         playing={play}
         loop={ploop}
-       
+        onEnd={nextSong}
+        ref={Refsong}
       />
 
   </div>
