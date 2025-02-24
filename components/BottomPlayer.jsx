@@ -21,7 +21,7 @@ import SongsList from '@/app/Data/SongsList'
 
 const BottomPlayer = () => {
   const [play,setplay] = useState(false)
-  const [ploop,setPloop] = useState(true)
+  const [ploop,setPloop] = useState(false)
   const [prandom , setPrandom] = useState(false)
   const Refsong = useRef()
   const [duration,setduration] = useState(0)
@@ -30,12 +30,22 @@ const BottomPlayer = () => {
   const SongsLists = SongsList()
   const [currentsoung , setCurrentsoung] = useState(0)
 
-  const random  = () =>{
-    setPrandom(!prandom)
-    // let SongCount = SongsLists.length
-    // let randomvalues = Math.random() * (SongCount - 1)
-    // setCurrentsoung(randomvalues.toFixed(0))
-    // setplay(true)
+
+
+  const nextRandomSong = () =>{
+    let SongCount = SongsLists.length
+    let randomvalues = Math.random() * (SongCount - 1)
+     randomvalues = randomvalues.toFixed(0)
+    while (randomvalues == currentsoung){
+      randomvalues = Math.random() * (SongCount - 1)
+      randomvalues = randomvalues.toFixed(0)
+    }
+ 
+    setCurrentsoung(randomvalues)
+    setplay(true)
+
+ 
+ 
   }
 
   const dragsong_prograssbar = (val) =>{
@@ -43,7 +53,7 @@ const BottomPlayer = () => {
     const dragtime =  (val/100)* dragduration
     Refsong.current.seek(dragtime)
     setduration(val)
-    console.log(val)
+   
   }
 
   useEffect(()=>{
@@ -54,7 +64,7 @@ const BottomPlayer = () => {
       setduration(progressbar)
       setfulltimeducation(timecovnate(durations))
       setremmeingtime(timecovnate(seek))
-      console.log(durations)
+     
     }, 500);
 
     return () => clearInterval(time)
@@ -123,7 +133,7 @@ const BottomPlayer = () => {
     <div className="flex-1 flex flex-col items-center gap-2">
       <div className="flex items-center gap-6">
 
-        <Button variant={prandom ?"ploop" : "ghost"}size="icon" onClick={()=>random()}>
+        <Button variant={prandom ? "ploop" : "ghost"}size="icon" onClick={()=> setPrandom(!prandom)}>
           <Shuffle className="w-4 h-4" />
         </Button>
 
@@ -182,7 +192,7 @@ const BottomPlayer = () => {
         src={SongsLists[currentsoung].url}
         playing={play}
         loop={ploop}
-        onEnd={nextSong}
+        onEnd={prandom ? nextRandomSong : nextSong}
         ref={Refsong}
       />
 
