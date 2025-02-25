@@ -2,54 +2,64 @@ pipeline {
     agent any
 
     environment {
-        // Set your Node.js version
         NODE_VERSION = 'nodejs' // Change to your desired Node.js version
-        // Set your project directory
         PROJECT_DIR = 'mySongs' // Change to your project directory
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from the repository
-                echo "Checkout the code from the repository" 
+                script {
+                    echo "Checking out code..."
+                }
             }
         }
 
         stage('Setup Node.js') {
             steps {
-                // Set up the Node.js environment
-               sh 'node --version'
+                script {
+                    sh 'node --version' // Only this command runs, everything else is echo
+                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-               // sh 'npm install'
+                script {
+                    echo "Running npm install..."
+                }
             }
         }
 
         stage('Lint Code') {
             steps {
-                echo "npm run lint"
+                script {
+                    echo "Running npm run lint..."
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                echo "npm test"
+                script {
+                    echo "Running npm test..."
+                }
             }
         }
 
         stage('Build Project') {
             steps {
-                echo " build Project"
+                script {
+                    echo "Running npm run build..."
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                 echo 'Deploying the application...'
+                script {
+                    echo "Running npm run deploy..."
+                }
             }
         }
     }
