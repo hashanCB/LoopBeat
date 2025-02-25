@@ -19,14 +19,13 @@ pipeline {
         stage('Setup Node.js') {
             steps {
                 // Set up the Node.js environment
-                sh "nvm install ${NODE_VERSION}"
-                sh "nvm use ${NODE_VERSION}"
+               sh 'node --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+               // sh 'npm install'
             }
         }
 
