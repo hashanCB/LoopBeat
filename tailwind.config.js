@@ -50,6 +50,15 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      keyframes: {
+        gradientX: {
+          '0%': { backgroundPosition: '100% 50%' }, // Start from right
+          '100%': { backgroundPosition: '0% 50%' } // Move to left
+        }
+      },
+      animation: {
+        gradientX: 'gradientX 3s ease infinite alternate'
+      },
     },
   },
 }
