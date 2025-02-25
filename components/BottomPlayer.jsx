@@ -49,6 +49,7 @@ const BottomPlayer = () => {
   }
 
   const dragsong_prograssbar = (val) =>{
+    if (!Refsong.current) return; 
     const dragduration =  Refsong.current.duration()
     const dragtime =  (val/100)* dragduration
     Refsong.current.seek(dragtime)
@@ -58,6 +59,7 @@ const BottomPlayer = () => {
 
   useEffect(()=>{
     const time = setInterval(() => {
+      if (!Refsong.current) return;
       const seek = Refsong.current.seek() || 0; // Get current time
       const durations = Refsong.current.duration() || 0; // Get current time
       const progressbar = (seek / durations ) * 100
@@ -69,7 +71,7 @@ const BottomPlayer = () => {
 
     return () => clearInterval(time)
   
-  })
+  },[play])
 
   const timecovnate = (time) =>{
     const min = (time/60).toFixed(2)
@@ -174,21 +176,22 @@ const BottomPlayer = () => {
           <Repeat className="w-4 h-4" />
         </Button>
 
-
+            {/* progress bar */}
       </div>
       <div className="flex items-center gap-2 w-full max-w-xl">
         <div className="text-xs text-zinc-400">{remmeingtime}</div>
-        <Slider value={[duration]} max={100} step={4} className="w-full" onValueChange={(val) => dragsong_prograssbar(val)} />
+        <Slider value={[duration]} isplay={play} max={100} step={4} className="w-full" onValueChange={(val) => dragsong_prograssbar(val)} />
         <div className="text-xs text-zinc-400">{fulltimeducation}</div>
       </div>
     </div>
 
     <div className="w-72 flex items-center justify-end gap-2">
       <Volume2 className="w-4 h-4" />
-      <Slider defaultValue={[60]} max={100} step={1} className="w-32"  />
+      <Slider defaultValue={[60]} max={100} step={1} isplay={play} className="w-32"  />
     </div>
 
     <ReactHowler 
+    
         src={SongsLists[currentsoung].url}
         playing={play}
         loop={ploop}
