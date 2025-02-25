@@ -9,7 +9,10 @@ This project is an **educational and testing purpose** website built using **Nex
 ✅ **Music Player Functionalities:**
    - Play/Pause songs
    - Next/Back navigation
-   - Progress bar for song playback  
+   - Progress bar for song playback
+   - Animated progress bar for song playback (powered by Framer Motion 🎬)
+   - Progress animation stops when the song is paused
+
 ✅ **Containerized with Docker**
 
 ## 📌 Current Status
