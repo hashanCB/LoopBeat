@@ -21,6 +21,7 @@ pipeline {
             steps {
                 script {
                     sh 'node --version' // Only this command runs, everything else is echo
+                    sh 'npm -v'
                     
                 }
             }
