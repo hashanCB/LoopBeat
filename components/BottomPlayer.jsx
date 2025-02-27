@@ -11,6 +11,8 @@ import {
   Shuffle,
   Volume2,
   Play,
+  VolumeX,
+  
 } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import Image from "next/image"
@@ -24,13 +26,17 @@ const BottomPlayer = () => {
   const [ploop,setPloop] = useState(false)
   const [prandom , setPrandom] = useState(false)
   const Refsong = useRef()
+  const RefVolums = useRef()
   const [duration,setduration] = useState(0)
   const [fulltimeducation , setfulltimeducation] = useState()
   const [remmeingtime , setremmeingtime] = useState(0)
   const SongsLists = SongsList()
   const [currentsoung , setCurrentsoung] = useState(0)
+  const [volums,setVolums] = useState(0.5)
+  const [ProcessBarvolums,setrocessBarVolums] = useState(0)
+  const [mute , setMute] = useState(false)
 
-
+  console.log(mute)
 
   const nextRandomSong = () =>{
     let SongCount = SongsLists.length
@@ -57,7 +63,20 @@ const BottomPlayer = () => {
    
   }
 
+  const dragVloums_prograssbar = (val) =>{
+    if (!Refsong.current) return; 
+
+    const NewVloums =  val/100
+    setrocessBarVolums(val)
+    setVolums(NewVloums)
+   
+  }
+
   useEffect(()=>{
+
+    let valums = (volums / 1) * 100
+    setrocessBarVolums(valums)
+
     const time = setInterval(() => {
       if (!Refsong.current) return;
       const seek = Refsong.current.seek() || 0; // Get current time
@@ -186,8 +205,11 @@ const BottomPlayer = () => {
     </div>
 
     <div className="w-72 flex items-center justify-end gap-2">
-      <Volume2 className="w-4 h-4" />
-      <Slider defaultValue={[60]} max={100} step={1} isplay={play} className="w-32"  />
+        <button onClick={() => setMute(!mute)}>
+           {mute ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        </button>
+
+      <Slider value={[ProcessBarvolums]} max={100}  step={1} isplay={play} className="w-32" onValueChange={(val) => dragVloums_prograssbar(val)}  />
     </div>
 
     <ReactHowler 
@@ -196,7 +218,9 @@ const BottomPlayer = () => {
         playing={play}
         loop={ploop}
         onEnd={prandom ? nextRandomSong : nextSong}
+        volume={volums}
         ref={Refsong}
+        mute={mute}
       />
 
   </div>
