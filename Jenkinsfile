@@ -10,7 +10,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    echo "Checking out code..."
+                    git branch: 'main', 
+                    credentialsId: 'github-credentials', 
+                    url: 'https://github.com/hashanCB/mySongs'
                 }
             }
         }
