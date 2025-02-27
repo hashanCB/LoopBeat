@@ -21,6 +21,7 @@ pipeline {
             steps {
                 script {
                     sh 'node --version' // Only this command runs, everything else is echo
+                    
                 }
             }
         }
@@ -29,6 +30,7 @@ pipeline {
             steps {
                 script {
                     echo "Running npm install..."
+                    sh 'npm install'
                 }
             }
         }
