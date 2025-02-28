@@ -18,6 +18,8 @@ import { Slider } from "@/components/ui/slider"
 import Image from "next/image"
 import ReactHowler from "react-howler";
 import SongsList from '@/app/Data/SongsList'
+import { useDispatch, useSelector } from 'react-redux'
+import { addsong } from '@/app/Redux/FavSongSlice'
 
 
 
@@ -36,7 +38,10 @@ const BottomPlayer = () => {
   const [ProcessBarvolums,setrocessBarVolums] = useState(0)
   const [mute , setMute] = useState(false)
 
-  console.log(mute)
+  //redux
+  const favsong = useSelector((state)=>state.FavSongSlice.name)
+  const dispath = useDispatch()
+  console.log(favsong)
 
   const nextRandomSong = () =>{
     let SongCount = SongsLists.length
@@ -102,7 +107,7 @@ const BottomPlayer = () => {
 
 
   const nextSong = () =>{
-    console.log("ok next")
+  
     let SongCount = SongsLists.length
     SongCount = SongCount - 1
     if ( currentsoung < SongCount){
@@ -146,7 +151,7 @@ const BottomPlayer = () => {
         <div className="font-medium">{SongsLists[currentsoung].name}</div>
         <div className="text-sm text-zinc-400">Alisha Joe</div>
       </div>
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" onClick={()=>dispath(addsong(SongsLists[currentsoung].id))}>
         <Heart className="w-4 h-4" />
       </Button>
     </div>

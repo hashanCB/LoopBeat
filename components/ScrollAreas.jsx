@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
@@ -7,39 +7,44 @@ import {
   MoreHorizontal,
 } from "lucide-react"
 import Image from "next/image"
+import SongsList from '@/app/Data/SongsList'
+import { useSelector } from 'react-redux'
 
 
 const ScrollAreas = () => {
+  const [favsongslist,setfavsonglist] = useState()
+  //readux store call
+  const favsong = useSelector((state)=>state.FavSongSlice.name)
+  console.log(favsong,"scoallbar")
+
+  useEffect(()=>{
+    const temlist = SongsList()
+    const favlist = temlist.filter((ele)=> favsong.includes(ele.id))
+    setfavsonglist(favlist)
+  },[favsong])
   return (
     <div className="p-8">
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold">Popular Releases</h2>
+                <h2 className="text-xl font-bold">VibeShelf 🎧 – A shelf for your favorite vibes  </h2>
                 <Button variant="link" className="text-green-500">
                   See All
                 </Button>
               </div>
               <div className="grid grid-cols-6 gap-4">
-                {[
-                  { title: "Abstract", year: "2024", type: "Album" },
-                  { title: "Halloween", year: "2024", type: "Album" },
-                  { title: "LoveLine", year: "2019", type: "Album" },
-                  { title: "Equals", year: "2021", type: "Album" },
-                  { title: "Rockstar", year: "Latest Releases", type: "Singles" },
-                  { title: "Music", year: "2024", type: "Album" },
-                ].map((album, i) => (
+              {  favsongslist && favsongslist.map((album, i) => (
                   <div key={i} className="space-y-2">
                     <div className="aspect-square bg-zinc-800 rounded-lg overflow-hidden">
                       <Image
-                        src="/Songimage/download (1).jpeg"
-                        alt={album.title}
+                        src={album.cover}
+                        alt={album.cover}
                         width={200}
                         height={200}
                         className="object-cover w-full h-full" />
                     </div>
-                    <div className="text-sm font-medium">{album.title}</div>
+                    <div className="text-sm font-medium">{album.name}</div>
                     <div className="text-xs text-zinc-400">
-                      {album.year} • {album.type}
+                      {album.year || 2010} • {album.type || "Sinhala"}
                     </div>
                   </div>
                 ))}
