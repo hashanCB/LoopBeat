@@ -15,7 +15,7 @@ const ScrollAreas = () => {
   const [favsongslist,setfavsonglist] = useState()
   //readux store call
   const favsong = useSelector((state)=>state.FavSongSlice.name)
-  console.log(favsong,"scoallbar")
+
 
   useEffect(()=>{
     const temlist = SongsList()
