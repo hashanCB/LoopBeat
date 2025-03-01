@@ -56,6 +56,7 @@ pipeline {
             steps {
                 script {
                     echo "Running npm run build..."
+                    sh 'docker build -t mySong:v1.0.0'
                 }
             }
         }
