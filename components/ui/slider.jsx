@@ -6,8 +6,9 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils"
 
 const Slider = React.forwardRef(({ className, max, value,isplay, ...props }, ref) => {
-  const percentage = (value / max) * 100;
-  console.log("pLy,",isplay)
+  const percentage = max > 0 && !isNaN(value) ? (value / max) * 100 : 0;
+
+
   return (
     <SliderPrimitive.Root
       ref={ref}

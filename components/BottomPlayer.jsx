@@ -37,27 +37,27 @@ const BottomPlayer = () => {
   const [volums,setVolums] = useState(0.5)
   const [ProcessBarvolums,setrocessBarVolums] = useState(0)
   const [mute , setMute] = useState(false)
+  const [isfav,SetIsfav]= useState(false)
 
   //redux
   const favsong = useSelector((state)=>state.FavSongSlice.name)
   const dispath = useDispatch()
-  console.log(favsong)
+ 
 
-  const nextRandomSong = () =>{
-    let SongCount = SongsLists.length
-    let randomvalues = Math.random() * (SongCount - 1)
-     randomvalues = randomvalues.toFixed(0)
-    while (randomvalues == currentsoung){
-      randomvalues = Math.random() * (SongCount - 1)
-      randomvalues = randomvalues.toFixed(0)
-    }
- 
-    setCurrentsoung(randomvalues)
-    setplay(true)
-
- 
- 
+  const addSongSlice = () =>{
+    const temp = favsong.includes(SongsLists[currentsoung].id)
+    !temp ? dispath(addsong(SongsLists[currentsoung].id) ) : null
+    
   }
+
+  const isfavsong = () => {
+   
+    const temp = favsong.includes(SongsLists[currentsoung].id)
+    console.log(favsong,"state",isfav,"currnt index",currentsoung , "temp ",temp)
+    temp ? SetIsfav(true) : SetIsfav(false)
+  }
+
+  
 
   const dragsong_prograssbar = (val) =>{
     if (!Refsong.current) return; 
@@ -81,7 +81,7 @@ const BottomPlayer = () => {
 
     let valums = (volums / 1) * 100
     setrocessBarVolums(valums)
-
+    isfavsong()
     const time = setInterval(() => {
       if (!Refsong.current) return;
       const seek = Refsong.current.seek() || 0; // Get current time
@@ -97,6 +97,10 @@ const BottomPlayer = () => {
   
   },[play])
 
+  useEffect(() => {
+    isfavsong();
+  }, [currentsoung]); // Runs every time currentsoung changes
+  
   const timecovnate = (time) =>{
     const min = (time/60).toFixed(2)
     const arr = min.split(".")
@@ -105,20 +109,19 @@ const BottomPlayer = () => {
   }
 
 
-
+  const NowPlay = () => {
+    setplay(!play)
+   
+  }
   const nextSong = () =>{
   
     let SongCount = SongsLists.length
     SongCount = SongCount - 1
     if ( currentsoung < SongCount){
-      
-      setCurrentsoung(currentsoung+1)
-      
-    }else{
-    
-      setCurrentsoung(0)
-    }
-   setplay(true)
+      setCurrentsoung(currentsoung+1) 
+    }else{ setCurrentsoung(0) }
+    setplay(true)
+   
   }
 
   const backSong = () =>{
@@ -132,9 +135,25 @@ const BottomPlayer = () => {
       setCurrentsoung(0)
     }
     setplay(true)
+ 
   }
 
+  const nextRandomSong = () =>{
+    let SongCount = SongsLists.length
+    let randomvalues = Math.random() * (SongCount - 1)
+     randomvalues = randomvalues.toFixed(0)
+    while (randomvalues == currentsoung){
+      randomvalues = Math.random() * (SongCount - 1)
+      randomvalues = randomvalues.toFixed(0)
+    }
+ 
+    setCurrentsoung(randomvalues)
+    setplay(true)
+    //isfavsong()
 
+ 
+ 
+  }
 
   return (
     <div className="max-w-screen-2xl mx-auto flex items-center gap-4">
@@ -151,7 +170,7 @@ const BottomPlayer = () => {
         <div className="font-medium">{SongsLists[currentsoung].name}</div>
         <div className="text-sm text-zinc-400">Alisha Joe</div>
       </div>
-      <Button variant="ghost" size="icon" onClick={()=>dispath(addsong(SongsLists[currentsoung].id))}>
+      <Button variant={isfav ? "ploop" : "ghost"} size="icon" onClick={()=>addSongSlice() }>
         <Heart className="w-4 h-4" />
       </Button>
     </div>
@@ -159,7 +178,7 @@ const BottomPlayer = () => {
     <div className="flex-1 flex flex-col items-center gap-2">
       <div className="flex items-center gap-6">
 
-        <Button variant={prandom ? "ploop" : "ghost"}size="icon" onClick={()=> setPrandom(!prandom)}>
+        <Button variant={prandom ? "ploop" : "ghost"} size="icon" onClick={()=> setPrandom(!prandom)}>
           <Shuffle className="w-4 h-4" />
         </Button>
 
@@ -174,7 +193,7 @@ const BottomPlayer = () => {
           <Button
             size="icon"
             className="rounded-full  bg-white text-black hover:bg-white/90 hover:border-2 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-600"
-            onClick={() => setplay(!play)}
+            onClick={() => NowPlay()}
           >
             {play ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
           </Button>
