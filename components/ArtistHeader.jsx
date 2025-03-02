@@ -5,9 +5,11 @@ import {
     Play,
   } from "lucide-react"
   import Image from "next/image"
+
 const ArtistHeader = () => {
   return (
      <div className="relative h-80 bg-gradient-to-r from-red-600 to-orange-600 p-8">
+
               <div className="absolute inset-0">
                 <Image
                   src={`https://hebbkx1anhila5yf.public.blob.vercel-storage.com/original-b0382240eaf33d26daf60c89dada3474-zRh2uaziL4AsSvkMaMCaM54qBD17eC.webp`}
@@ -35,6 +37,7 @@ const ArtistHeader = () => {
                   </Button>
                 </div>
               </div>
+
             </div>
   )
 }
