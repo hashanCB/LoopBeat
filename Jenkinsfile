@@ -77,7 +77,7 @@ pipeline {
             steps {
                 script {
                      echo "Building Docker image with version: ${env.VERSION}"
-                     sh "docker build -t mysong:${env.VERSION} -t mysong:latest ."
+                     sh "docker build -t mysong:${env.VERSION}   ."
                 }
             }
         }
