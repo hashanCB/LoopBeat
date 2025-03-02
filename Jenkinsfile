@@ -4,7 +4,7 @@ pipeline {
     environment {
         NODE_VERSION = '20.16.0' // Change to your desired Node.js version
         PROJECT_DIR = 'mySongs' // Change to your project directory
-        VERSION = ""
+        
     }
 
     stages {
@@ -42,17 +42,17 @@ pipeline {
                     // Increment package version
                     sh 'npm version patch --no-git-tag-version'
 
-                    // Ensure Jenkins sees the updated file
-                    sleep(2)  // Small delay to allow filesystem update (optional)
+                    // Ensure Jenkins reads the updated file
+                    sleep(2)
 
-                    // Read updated package.json and extract the version
-                    def packageJson = readJSON text: sh(script: "cat package.json", returnStdout: true)
-                    env.VERSION = packageJson.version  // Store the new version
+                    // Read updated package.json and extract the version correctly
+                    env.VERSION = sh(script: "node -p \"require('./package.json').version\"", returnStdout: true).trim()
 
                     echo "New version: ${env.VERSION}"
                 }
             }
-}
+        }
+
 
 
 
