@@ -37,20 +37,21 @@ pipeline {
             }
         }
 
-          stage('Increment Version') {
-                steps {
-                    script {
-                        // Increment package version (patch update)
-                        sh 'npm version patch --no-git-tag-version'
-                        
-                        // Read package.json to get the new version
-                        def packageJson = readJSON file: 'package.json'
-                        env.VERSION = packageJson.version  // Persist the version across stages
+         stage('Increment Version') {
+            steps {
+                script {
+                    // Increment package version
+                    sh 'npm version patch --no-git-tag-version'
+                    
+                    // Read updated package.json and extract the version
+                    def packageJson = readJSON file: 'package.json'
+                    env.VERSION = packageJson.version  // Store the new version
 
-                        echo "New version: ${env.VERSION}"
-                    }
+                    echo "New version: ${env.VERSION}"
                 }
             }
+        }
+
 
 
         stage('Lint Code') {
