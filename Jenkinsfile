@@ -82,7 +82,7 @@ pipeline {
             stage('Commit & Push Version Change') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'githubpat-key', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh '''
                         git config --global user.email "jenkins@hashan.com"
                         git config --global user.name "Jenkins"
