@@ -36,21 +36,24 @@ pipeline {
                 }
             }
         }
-
-         stage('Increment Version') {
+        stage('Increment Version') {
             steps {
                 script {
                     // Increment package version
                     sh 'npm version patch --no-git-tag-version'
-                    
+
+                    // Ensure Jenkins sees the updated file
+                    sleep(2)  // Small delay to allow filesystem update (optional)
+
                     // Read updated package.json and extract the version
-                    def packageJson = readJSON file: 'package.json'
+                    def packageJson = readJSON text: sh(script: "cat package.json", returnStdout: true)
                     env.VERSION = packageJson.version  // Store the new version
 
                     echo "New version: ${env.VERSION}"
                 }
             }
-        }
+}
+
 
 
 
