@@ -4,6 +4,7 @@ pipeline {
     environment {
         NODE_VERSION = '20.16.0' // Change to your desired Node.js version
         PROJECT_DIR = 'mySongs' // Change to your project directory
+         VERSION = ""
     }
 
     stages {
@@ -36,6 +37,20 @@ pipeline {
             }
         }
 
+          stage('Increment Version') {
+            steps {
+                script {
+                    // Increment package version (patch, minor, major)
+                    sh 'npm version patch --no-git-tag-version'
+
+                    // Extract the new version from package.json
+                    VERSION = sh(script: "node -p \"require('./package.json').version\"", returnStdout: true).trim()
+
+                    echo "New version: ${VERSION}"
+                }
+            }
+        }
+
         stage('Lint Code') {
             steps {
                 script {
@@ -56,8 +71,34 @@ pipeline {
             steps {
                 script {
                     echo "Running npm run build..."
-                    sh 'docker build -t mysong:v1.0.0 .'
+                    sh 'docker build -t mysong:${VERSION} .'
                 }
+            }
+        }
+
+            stage('Commit & Push Version Change') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh '''
+                        git config --global user.email "jenkins@hashan.com"
+                        git config --global user.name "Jenkins"
+
+                        
+                        git remote set-url origin https://${USER}:${PASS}@github.com/hashanCB/mySongs.git
+
+                       
+                        git add -A
+
+                        
+                        git diff --staged --quiet || git commit -m "ci: version bump [ci skip]"
+
+                       
+                        git push origin HEAD:main
+                        '''
+                    }
+                }
+
             }
         }
 
