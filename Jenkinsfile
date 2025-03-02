@@ -38,18 +38,20 @@ pipeline {
         }
 
           stage('Increment Version') {
-            steps {
-                script {
-                    // Increment package version (patch, minor, major)
-                    sh 'npm version patch --no-git-tag-version'
+                steps {
+                    script {
+                        // Increment package version (patch update)
+                        sh 'npm version patch --no-git-tag-version'
+                        
+                        // Read package.json to get the new version
+                        def packageJson = readJSON file: 'package.json'
+                        env.VERSION = packageJson.version  // Persist the version across stages
 
-                    // Extract the new version from package.json
-                    VERSION = sh(script: "node -p \"require('./package.json').version\"", returnStdout: true).trim()
-
-                    echo "New version: ${VERSION}"
+                        echo "New version: ${env.VERSION}"
+                    }
                 }
             }
-        }
+
 
         stage('Lint Code') {
             steps {
@@ -71,7 +73,7 @@ pipeline {
             steps {
                 script {
                     echo "Running npm run build..."
-                    sh `docker build -t mysong:${VERSION} .`
+                    sh 'docker build -t mysong:${env.VERSION} .'
                 }
             }
         }
