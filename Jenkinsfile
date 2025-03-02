@@ -4,7 +4,7 @@ pipeline {
     environment {
         NODE_VERSION = '20.16.0' // Change to your desired Node.js version
         PROJECT_DIR = 'mySongs' // Change to your project directory
-         VERSION = ""
+        VERSION = ""
     }
 
     stages {
