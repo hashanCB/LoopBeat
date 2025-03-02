@@ -71,7 +71,7 @@ pipeline {
             steps {
                 script {
                     echo "Running npm run build..."
-                    sh 'docker build -t mysong:${VERSION} .'
+                    sh `docker build -t mysong:${VERSION} .`
                 }
             }
         }
