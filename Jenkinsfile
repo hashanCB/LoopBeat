@@ -73,8 +73,8 @@ pipeline {
         stage('Build Project') {
             steps {
                 script {
-                    echo "Running npm run build..."
-                    sh 'docker build -t mysong:${env.VERSION} .'
+                     echo "Building Docker image with version: ${env.VERSION}"
+                     sh "docker build -t mysong:${env.VERSION} -t mysong:latest ."
                 }
             }
         }
