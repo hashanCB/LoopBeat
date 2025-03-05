@@ -4,7 +4,8 @@ pipeline {
     environment {
         NODE_VERSION = '20.16.0' // Change to your desired Node.js version
         PROJECT_DIR = 'mySongs' // Change to your project directory
-        
+        IMAGE_NAME = 'mysongs'
+        DOCKER_USER = 'hashancch'
     }
 
     stages {
@@ -77,7 +78,21 @@ pipeline {
             steps {
                 script {
                      echo "Building Docker image with version: ${env.VERSION}"
-                     sh "docker build -t mysong:${env.VERSION}   ."
+                     sh "docker build -t ${IMAGE_NAME}:${env.VERSION}   ."
+                }
+            }
+        }
+
+        stage('Push Image to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASS', usernameVariable: 'USER')]) { //github access key need to get anf  after jenkins cedination add username and password(key)
+                        sh '''
+                        sh "docker login -u ${PASS} -p ${USER}"
+                        sh "docker tag ${IMAGE_NAME}:${env.VERSION} ${PASS}/${IMAGE_NAME}:${env.VERSION}"
+                        sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:${env.VERSION}"
+                        '''
+                    }
                 }
             }
         }
