@@ -19,7 +19,7 @@ import Image from "next/image"
 import ReactHowler from "react-howler";
 import SongsList from '@/app/Data/SongsList'
 import { useDispatch, useSelector } from 'react-redux'
-import { addsong, GoableSongPlay } from '@/app/Redux/FavSongSlice'
+import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
 
 
 
@@ -47,14 +47,15 @@ const BottomPlayer = () => {
 
   const addSongSlice = () =>{
     const temp = favsong.includes(SongsLists[currentsoung].id)
-    !temp ? dispath(addsong(SongsLists[currentsoung].id) ) : null
+    if (!temp ) { dispath(addsong(SongsLists[currentsoung].id) ) }
+    else { dispath( removesong(SongsLists[currentsoung].id)) }
+    SetIsfav(!isfav)
     
   }
 
   const isfavsong = () => {
    
     const temp = favsong.includes(SongsLists[currentsoung].id)
-    console.log(favsong,"state",isfav,"currnt index",currentsoung , "temp ",temp)
     temp ? SetIsfav(true) : SetIsfav(false)
   }
 
