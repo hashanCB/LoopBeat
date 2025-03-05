@@ -10,16 +10,7 @@ pipeline {
         DOCKER_USER = 'hashancch'
     }
 
-     stages {
-        stage('init') {
-            steps {
-                script {
-                   gv = load "script.groovy"
-                }
-            }
-        }
-     }
-
+   
     stages {
         stage('Checkout') {
             steps {
@@ -31,6 +22,14 @@ pipeline {
             }
         }
 
+           stage('init') {
+            steps {
+                script {
+                   gv = load "script.groovy"
+                }
+            }
+        }
+        
         stage('Setup Node.js') {
             steps {
                 script {
