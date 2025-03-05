@@ -103,13 +103,13 @@ const BottomPlayer = () => {
     isfavsong();
   }, [currentsoung]); // Runs every time currentsoung changes
   
-  const timecovnate = (time) =>{
-    const min = (time/60).toFixed(2)
-    const arr = min.split(".")
-    const min2 = arr.join(":")
-    return min2
-  }
 
+  const timecovnate = (time) => {
+    const minutes = Math.floor(time / 60); // Get the minutes
+    const seconds = Math.floor(time % 60); // Get the seconds
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`; // Format to mm:ss
+  }
+  
 
   const NowPlay = () => {
   
