@@ -1,3 +1,5 @@
+
+def gv
 pipeline {
     agent any
 
@@ -7,6 +9,16 @@ pipeline {
         IMAGE_NAME = 'mysongs'
         DOCKER_USER = 'hashancch'
     }
+
+     stages {
+        stage('init') {
+            steps {
+                script {
+                   gv = load "script.groovy"
+                }
+            }
+        }
+     }
 
     stages {
         stage('Checkout') {
@@ -86,13 +98,7 @@ pipeline {
         stage('Push Image to Docker Hub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh '''
-                        echo "$PASS" | docker login -u "$USER" --password-stdin
-                        docker tag ${IMAGE_NAME}:${VERSION} ${DOCKER_USER}/${IMAGE_NAME}:${VERSION}
-                        docker push ${DOCKER_USER}/${IMAGE_NAME}:${VERSION}
-                        '''
-                    }
+                        gv.ImagePushDockerHub()
                 }
             }
         }
