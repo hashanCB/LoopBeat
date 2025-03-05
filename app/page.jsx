@@ -6,7 +6,14 @@ import ScrollAreas from "@/components/ScrollAreas"
 import Topbar from "@/components/Topbar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import Flybird from '@/components/Model3d/Flybird'
+import { useSelect } from "@react-three/drei"
+import { useSelector } from "react-redux"
+import { useEffect } from "react"
+import {AnimatePresence, motion} from 'framer-motion'
 export default function MusicApp() {
+
+   const GobleSongPlay = useSelector((state)=>state.FavSongSlice.NowPlay)
+
   return (
     (<div className="flex h-screen bg-black text-white">
     
@@ -28,8 +35,25 @@ export default function MusicApp() {
     
       </div>
       <div className='absolute bottom-24 right-0   '>
-                    <Flybird isPlaying={true} className="w-full " />
-       </div>
+               {GobleSongPlay &&   
+             
+
+                <motion.div
+                    className="w-full"
+                    initial={{ opacity: 0 }} // Initial state: invisible
+                    animate={{ opacity: 1 }} // Animate to full opacity
+                    exit={{ opacity: 0 }} // Fade out when removed
+                    transition={{ duration: 2 }} // Transition duration
+                  >
+                    <Flybird isPlaying={true} className="w-full" />
+                  </motion.div>
+            
+              
+      
+                }  
+            
+     
+       </div> 
     </div>)
   );
 }

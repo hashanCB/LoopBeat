@@ -19,7 +19,7 @@ import Image from "next/image"
 import ReactHowler from "react-howler";
 import SongsList from '@/app/Data/SongsList'
 import { useDispatch, useSelector } from 'react-redux'
-import { addsong } from '@/app/Redux/FavSongSlice'
+import { addsong, GoableSongPlay } from '@/app/Redux/FavSongSlice'
 
 
 
@@ -41,6 +41,7 @@ const BottomPlayer = () => {
 
   //redux
   const favsong = useSelector((state)=>state.FavSongSlice.name)
+  const GobleSongPlay = useSelector((state)=>state.FavSongSlice.NowPlay)
   const dispath = useDispatch()
  
 
@@ -110,7 +111,9 @@ const BottomPlayer = () => {
 
 
   const NowPlay = () => {
+  
     setplay(!play)
+    dispath(GoableSongPlay(!GobleSongPlay))
    
   }
   const nextSong = () =>{
@@ -121,7 +124,7 @@ const BottomPlayer = () => {
       setCurrentsoung(currentsoung+1) 
     }else{ setCurrentsoung(0) }
     setplay(true)
-   
+    dispath(GoableSongPlay(!GobleSongPlay))
   }
 
   const backSong = () =>{
@@ -135,7 +138,7 @@ const BottomPlayer = () => {
       setCurrentsoung(0)
     }
     setplay(true)
- 
+    dispath(GoableSongPlay(!GobleSongPlay))
   }
 
   const nextRandomSong = () =>{
@@ -149,7 +152,7 @@ const BottomPlayer = () => {
  
     setCurrentsoung(randomvalues)
     setplay(true)
-    //isfavsong()
+    
 
  
  

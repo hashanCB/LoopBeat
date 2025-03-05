@@ -8,6 +8,8 @@ const SongsList = () => {
         {  id: 3  ,name:"Hitha Addara Lagata Wela" , url: "/mp3/Hitha Addara Lagata Wela.mp3",cover:"/cover/4.jpeg"},
         {  id: 4 ,name:"Bisawa" , url: "/mp3/bisawa.mp3",cover:"/cover/bisawa.jpeg"},
         {  id: 5 ,name:"Amathaka katanna Epa" , url: "/mp3/Amathaka karanna epa.mp3",cover:"/cover/amathaka.jpeg"},
+        {  id: 6 ,name:"Kadu atharin ude hawa" , url: "/mp3/kadu atharin.mp3",cover:"/cover/Kadu atharin ude hawa.jpeg"},
+
          
          
     ]
