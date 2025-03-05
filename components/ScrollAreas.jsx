@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
+import SongsList from '@/app/Data/SongsList'
 
 import {
   Heart,
   MoreHorizontal,
 } from "lucide-react"
 import Image from "next/image"
-import SongsList from '@/app/Data/SongsList'
+
 import { useSelector } from 'react-redux'
 
 
@@ -17,7 +18,7 @@ const ScrollAreas = () => {
   const [favsongslist,setfavsonglist] = useState()
   //readux store call
   const favsong = useSelector((state)=>state.FavSongSlice.name)
-
+  const SongsLists = SongsList()
 
   useEffect(()=>{
     const temlist = SongsList()
@@ -65,36 +66,35 @@ const ScrollAreas = () => {
                 <h2 className="text-xl font-bold">Popular Song</h2>
               </div>
               <div className="space-y-2">
-                {[
-                  { title: "Abstract", plays: "1,952,015", duration: "3:36" },
-                  { title: "Love Line", plays: "3,024,067", duration: "5:15" },
-                  { title: "Abstract", plays: "1,952,015", duration: "3:36" },
-                ].map((song, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/5">
-                    <div className="w-6 text-center text-zinc-400">{i + 1}</div>
-                    <div className="w-12 h-12 bg-zinc-800 rounded">
-                      <Image
-                        src="/Songimage/images.png"
-                        alt={song.title}
-                        width={48}
-                        height={48}
-                        className="object-cover" />
+                {SongsLists.map((song,index)=>(
+                      <div
+                      key={index}
+                      className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/5">
+                      <div className="w-6 text-center text-zinc-400">{index + 1}</div>
+                      <div className="w-12 h-12 bg-zinc-800 rounded">
+                        <Image
+                          src={song.cover}
+                          alt={song.name}
+                          width={48}
+                          height={48}
+                          className="object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-medium">{song.name}</div>
+                        <div className="text-sm text-zinc-400">{song.plays || "Song name"}</div>
+                      </div>
+                      
+                      <div className="text-zinc-400">{song.duration || "4:00"}</div>
+                      <Button variant="ghost" size="icon">
+                        <Heart className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
                     </div>
-                    <div className="flex-1">
-                      <div className="font-medium">{song.title}</div>
-                      <div className="text-sm text-zinc-400">{song.plays}</div>
-                    </div>
-                    <div className="text-zinc-400">{song.duration}</div>
-                    <Button variant="ghost" size="icon">
-                      <Heart className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="w-4 h-4" />
-                    </Button>
-                  </div>
                 ))}
+                
+               
               </div>
             </div>
          
