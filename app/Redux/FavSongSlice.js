@@ -13,6 +13,9 @@ export const FavSongSlice = createSlice({
         addsong: (state,action) => {
                 state.name.push(action.payload)
         },
+        removesong : (state,action) => {
+                state.name = state.name.filter((ele,index)=> ele != action.payload)
+        },
         GoableSongPlay : (state,action) => {
                 state.NowPlay = action.payload
         }
@@ -20,4 +23,4 @@ export const FavSongSlice = createSlice({
 })
 
 export default  FavSongSlice.reducer
-export const  { addsong,GoableSongPlay } = FavSongSlice.actions
+export const  { addsong,GoableSongPlay , removesong } = FavSongSlice.actions
