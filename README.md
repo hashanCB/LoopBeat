@@ -1,29 +1,45 @@
 # 🎵 Song Player UI - Education & Testing Purpose
 
-This project is an **educational and testing purpose** website built using **Next.js**, **React**, and **various React tools**. It features a **song player UI** with interactive functionality.
+This project is an **educational and testing purpose** website built using **Next.js**, **React**, and **various React tools**. It features a **song player UI** with interactive functionality and smooth animations.
 
 ## 🚀 Features
 
 ✅ **Built with Next.js & React**  
 ✅ **Styled using Tailwind CSS**  
-✅ **Music Player Functionalities:**
-   - Play/Pause songs
-   - Next/Back navigation
-   - Progress bar for song playback
-   - Animated progress bar for song playback (powered by Framer Motion 🎬)
-   - Progress animation stops when the song is paused
+✅ **Music Player Functionalities:**  
+   - Play/Pause songs  
+   - Next/Back navigation  
+   - Loop and shuffle playback (Random Mix Mode) 🎛️  
+   - Progress bar with current time, duration display & seek functionality  
+   - Animated progress bar for song playback (powered by Framer Motion 🎬)  
+   - Volume control with slider and mute/unmute toggle 🔊  
+   - Progress animation stops when the song is paused  
+
+✅ **3D Model Integration**  
+   - **React Three Fiber & @react-three/drei** used for 3D model rendering  
+   - **Dancing Model** connected with "GoablePlay" music state using Redux  
+   - Controlled size, camera position, and lighting for GLB format  
+
+✅ **Redux Integration**  
+   - Implemented favorite songs slice  
+   - Optimized `isFavSong` execution using `useEffect`  
 
 ✅ **Containerized with Docker**
 
 ## 📌 Current Status
 - ✅ **UI Completed** using Tailwind CSS
-- 🔧 **Song player core functionalities implemented**
+- ✅ **Song player core functionalities implemented**
+- ✅ **Framer Motion integrated for smooth animations**
+- ✅ **3D model dancing with music playback**
 - 🛠 **Further improvements in progress**
 
 ## 🛠 Technologies Used
 - **Next.js** - For SSR and frontend framework
 - **React** - UI component-based development
 - **Tailwind CSS** - Fast and responsive styling
+- **Framer Motion** - Smooth UI animations
+- **Redux** - State management for player & favorites
+- **React Three Fiber & @react-three/drei** - 3D model rendering
 - **Docker** - To containerize the application
 
 ## 📦 Setup & Installation
@@ -60,6 +76,7 @@ Now visit **http://localhost:3000** to see the app in action. 🎶
 - Improve song playlist features 🎼
 - Add user playlists and favorites ⭐
 - Implement API for fetching songs from a backend 🎧
+- Enhance 3D model animations & interactions 🎭
 
 ## 🤝 Contributions
 Feel free to **fork** this repo, open an **issue**, or submit a **pull request** to improve the project!
