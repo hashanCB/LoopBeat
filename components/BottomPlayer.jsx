@@ -20,6 +20,7 @@ import ReactHowler from "react-howler";
 import SongsList from '@/app/Data/SongsList'
 import { useDispatch, useSelector } from 'react-redux'
 import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
+import { NowPlaying } from '@/app/Redux/CurrentSongSlice'
 
 
 
@@ -117,6 +118,13 @@ const BottomPlayer = () => {
     dispath(GoableSongPlay(!GobleSongPlay))
    
   }
+  //run every time reander
+  useEffect(()=>{
+    dispath(NowPlaying(currentsoung))
+    console.log("run every time")
+  })
+
+
   const nextSong = () =>{
   
     let SongCount = SongsLists.length
