@@ -15,16 +15,23 @@ import { useSelector } from 'react-redux'
 
 
 const ScrollAreas = () => {
+
+
   const [favsongslist,setfavsonglist] = useState()
   //readux store call
   const favsong = useSelector((state)=>state.FavSongSlice.name)
   const SongsLists = SongsList()
+  const NowPlaySong = useSelector((state)=>state.CurrentSongSlice.songname)
+
 
   useEffect(()=>{
     const temlist = SongsList()
     const favlist = temlist.filter((ele)=> favsong.includes(ele.id))
     setfavsonglist(favlist)
   },[favsong])
+
+
+
   return (
     <div className="p-8 relative">
    
@@ -69,7 +76,7 @@ const ScrollAreas = () => {
                 {SongsLists.map((song,index)=>(
                       <div
                       key={index}
-                      className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/5">
+                      className={`flex items-center gap-4 p-2 rounded-lg hover:bg-white/5 ${NowPlaySong == song.id ? "bg-gradient-to-r from-blue-600/55  to-black-600 border-2 border-r-emerald-100" : null}`}>
                       <div className="w-6 text-center text-zinc-400">{index + 1}</div>
                       <div className="w-12 h-12 bg-zinc-800 rounded">
                         <Image
