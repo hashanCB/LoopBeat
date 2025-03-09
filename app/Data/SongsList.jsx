@@ -9,7 +9,8 @@ const SongsList = () => {
         {  id: 4 ,name:"Bisawa" , url: "/mp3/bisawa.mp3",cover:"/cover/bisawa.jpeg",duration : "3:21"},
         {  id: 5 ,name:"Amathaka katanna Epa" , url: "/mp3/Amathaka karanna epa.mp3",cover:"/cover/amathaka.jpeg" ,duration : "4:23"},
         {  id: 6 ,name:"Kadu atharin ude hawa" , url: "/mp3/kadu atharin.mp3",cover:"/cover/Kadu atharin ude hawa.jpeg" ,duration : "4:09"},
-
+        {  id: 7 ,name:"KALU - As Thol Lema" , url: "/mp3/KALU - As Thol Lema.mp3",cover:"/cover/astholame.jpeg" ,duration : "4:09"},
+        
          
          
     ]
