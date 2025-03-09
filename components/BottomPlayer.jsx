@@ -115,13 +115,14 @@ const BottomPlayer = () => {
   const NowPlay = () => {
   
     setplay(!play)
-    dispath(GoableSongPlay(!GobleSongPlay))
+   
    
   }
   //run every time reander
   useEffect(()=>{
     dispath(NowPlaying(currentsoung))
-    console.log("run every time")
+    play ? dispath(GoableSongPlay(true)) : dispath(GoableSongPlay(false)) 
+    console.log("run every time",play)
   })
 
 
@@ -133,7 +134,7 @@ const BottomPlayer = () => {
       setCurrentsoung(currentsoung+1) 
     }else{ setCurrentsoung(0) }
     setplay(true)
-    dispath(GoableSongPlay(!GobleSongPlay))
+  
   }
 
   const backSong = () =>{
@@ -147,7 +148,7 @@ const BottomPlayer = () => {
       setCurrentsoung(0)
     }
     setplay(true)
-    dispath(GoableSongPlay(!GobleSongPlay))
+   
   }
 
   const nextRandomSong = () =>{
