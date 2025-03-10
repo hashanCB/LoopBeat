@@ -49,6 +49,7 @@ const BottomPlayer = () => {
 
   const addSongSlice = () =>{
     const temp = favsong.includes(SongsLists[currentsoung].id)
+    
     if (!temp ) { dispath(addsong(SongsLists[currentsoung].id) ) }
     else { dispath( removesong(SongsLists[currentsoung].id)) }
     SetIsfav(!isfav)
@@ -58,6 +59,7 @@ const BottomPlayer = () => {
   const isfavsong = () => {
    
     const temp = favsong.includes(SongsLists[currentsoung].id)
+    
     temp ? SetIsfav(true) : SetIsfav(false)
   }
 
@@ -115,7 +117,7 @@ const BottomPlayer = () => {
 
   const NowPlay = () => {
     dispath(setIsPlay())
-   
+  
    
    
   }
@@ -123,7 +125,7 @@ const BottomPlayer = () => {
   useEffect(()=>{
     dispath(NowPlaying(currentsoung))
     Rdx_IsPlay ? dispath(GoableSongPlay(true)) : dispath(GoableSongPlay(false)) 
-   
+    isfavsong()
   })
 
 
@@ -190,6 +192,7 @@ const BottomPlayer = () => {
         <div className="font-medium">{SongsLists[currentsoung].name}</div>
         <div className="text-sm text-zinc-400">Alisha Joe</div>
       </div>
+      {/* Heart Logo */}
       <Button variant={isfav ? "ploop" : "ghost"} size="icon" onClick={()=>addSongSlice() }>
         <Heart className="w-4 h-4" />
       </Button>
