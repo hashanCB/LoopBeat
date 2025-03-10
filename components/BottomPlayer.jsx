@@ -20,7 +20,7 @@ import ReactHowler from "react-howler";
 import SongsList from '@/app/Data/SongsList'
 import { useDispatch, useSelector } from 'react-redux'
 import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
-import { NowPlaying } from '@/app/Redux/CurrentSongSlice'
+import { addcurrentsoung, NowPlaying, removecurrentsoung, resetcurrentsoung, setcurrentsoungslice, setIsPlay, setIsPlayTrueFalse } from '@/app/Redux/CurrentSongSlice'
 
 
 
@@ -34,7 +34,7 @@ const BottomPlayer = () => {
   const [fulltimeducation , setfulltimeducation] = useState()
   const [remmeingtime , setremmeingtime] = useState(0)
   const SongsLists = SongsList()
-  const [currentsoung , setCurrentsoung] = useState(0)
+
   const [volums,setVolums] = useState(0.5)
   const [ProcessBarvolums,setrocessBarVolums] = useState(0)
   const [mute , setMute] = useState(false)
@@ -42,7 +42,8 @@ const BottomPlayer = () => {
 
   //redux
   const favsong = useSelector((state)=>state.FavSongSlice.name)
-  const GobleSongPlay = useSelector((state)=>state.FavSongSlice.NowPlay)
+  const Rdx_IsPlay = useSelector((state)=>state.CurrentSongSlice.IsPlay)  //main veriable contral  Contral Song play
+  const currentsoung = useSelector((state)=>state.CurrentSongSlice.currentsoung)
   const dispath = useDispatch()
  
 
@@ -98,7 +99,7 @@ const BottomPlayer = () => {
 
     return () => clearInterval(time)
   
-  },[play])
+  },[Rdx_IsPlay])
 
   useEffect(() => {
     isfavsong();
@@ -113,16 +114,16 @@ const BottomPlayer = () => {
   
 
   const NowPlay = () => {
-  
-    setplay(!play)
+    dispath(setIsPlay())
+   
    
    
   }
   //run every time reander
   useEffect(()=>{
     dispath(NowPlaying(currentsoung))
-    play ? dispath(GoableSongPlay(true)) : dispath(GoableSongPlay(false)) 
-    console.log("run every time",play)
+    Rdx_IsPlay ? dispath(GoableSongPlay(true)) : dispath(GoableSongPlay(false)) 
+   
   })
 
 
@@ -131,23 +132,29 @@ const BottomPlayer = () => {
     let SongCount = SongsLists.length
     SongCount = SongCount - 1
     if ( currentsoung < SongCount){
-      setCurrentsoung(currentsoung+1) 
-    }else{ setCurrentsoung(0) }
-    setplay(true)
+      dispath(addcurrentsoung())
+     
+    }else{
+      dispath(resetcurrentsoung()) }
+
+      dispath(setIsPlayTrueFalse(true))
+   
   
-  }
+ 
+}
 
   const backSong = () =>{
     let SongCount = SongsLists.length
     SongCount = SongCount - 1
     if ( currentsoung > 0 ){
-      
-      setCurrentsoung(currentsoung-1)
+      dispath(removecurrentsoung())
+     
     }else{
-       
-      setCurrentsoung(0)
+      dispath(resetcurrentsoung())
+    
     }
-    setplay(true)
+    dispath(setIsPlayTrueFalse(true))
+  
    
   }
 
@@ -159,9 +166,9 @@ const BottomPlayer = () => {
       randomvalues = Math.random() * (SongCount - 1)
       randomvalues = randomvalues.toFixed(0)
     }
- 
-    setCurrentsoung(randomvalues)
-    setplay(true)
+    dispath(setcurrentsoungslice(randomvalues))
+    dispath(setIsPlayTrueFalse(true))
+  
     
 
  
@@ -208,11 +215,11 @@ const BottomPlayer = () => {
             className="rounded-full  bg-white text-black hover:bg-white/90 hover:border-2 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-600"
             onClick={() => NowPlay()}
           >
-            {play ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            {Rdx_IsPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
           </Button>
 
           {/* Blue Wave Animation */}
-          {play ? [] : <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          {Rdx_IsPlay ? [] : <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             {/* Wave Circles */}
             <div className="absolute w-12 h-12 border-2 border-blue-500 rounded-full animate-ping opacity-75"></div>
             <div className="absolute w-16 h-16 border-2 border-blue-500 rounded-full animate-ping opacity-75 delay-200"></div>
@@ -236,7 +243,7 @@ const BottomPlayer = () => {
       </div>
       <div className="flex items-center gap-2 w-full max-w-xl">
         <div className="text-xs text-zinc-400">{remmeingtime}</div>
-        <Slider value={[duration]} isplay={play} max={100} step={4} className="w-full" onValueChange={(val) => dragsong_prograssbar(val)} />
+        <Slider value={[duration]} isplay={Rdx_IsPlay} max={100} step={4} className="w-full" onValueChange={(val) => dragsong_prograssbar(val)} />
         <div className="text-xs text-zinc-400">{fulltimeducation}</div>
       </div>
     </div>
@@ -246,13 +253,13 @@ const BottomPlayer = () => {
            {mute ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         </button>
 
-      <Slider value={[ProcessBarvolums]} max={100}  step={1} isplay={play} className="w-32" onValueChange={(val) => dragVloums_prograssbar(val)}  />
+      <Slider value={[ProcessBarvolums]} max={100}  step={1} isplay={Rdx_IsPlay} className="w-32" onValueChange={(val) => dragVloums_prograssbar(val)}  />
     </div>
 
     <ReactHowler 
     
         src={SongsLists[currentsoung].url}
-        playing={play}
+        playing={Rdx_IsPlay}
         loop={ploop}
         onEnd={prandom ? nextRandomSong : nextSong}
         volume={volums}
