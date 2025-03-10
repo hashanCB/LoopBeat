@@ -27,10 +27,11 @@ const ScrollAreas = () => {
   const Rdx_IsPlay = useSelector((state)=>state.CurrentSongSlice.IsPlay)  //main veriable contral  Contral Song play
   const dispath = useDispatch() // use for the set user seleceted song add to play
 
+  //after render redux pass Favsong List and call this useEffeact and set values to favsongslist state
   useEffect(()=>{
     const temlist = SongsList()
     const favlist = temlist.filter((ele)=> favsong.includes(ele.id))
-   
+    console.log("favlist",favlist)
     setfavsonglist(favlist)
   },[favsong])
 
@@ -102,10 +103,15 @@ const ScrollAreas = () => {
                       </div>
                       
                       <div className="text-zinc-400">{song.duration || "4:00"}</div>
-                      {/* { favsongslist[index].includes()} */}
-                      <Button variant="ghost" size="icon">
-                        <Heart className="w-4 h-4" />
-                      </Button>
+                      
+                         
+                          <Button variant={favsongslist && favsongslist.some((ele)=> ele.id === song.id)? "ploop" : "ghost"} size="icon">
+  
+                            <Heart className="w-4 h-4" />
+                          </Button> 
+                      
+                    
+                   
                       <Button variant="ghost" size="icon">
                         <MoreHorizontal className="w-4 h-4" />
                       </Button>
