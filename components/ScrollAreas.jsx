@@ -10,27 +10,36 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setcurrentsoungslice, setIsPlay, setIsPlayTrueFalse } from '@/app/Redux/CurrentSongSlice'
+import { GoableSongPlay } from '@/app/Redux/FavSongSlice'
 
 
 
 const ScrollAreas = () => {
-
+  const SongsLists = SongsList()
 
   const [favsongslist,setfavsonglist] = useState()
   //readux store call
   const favsong = useSelector((state)=>state.FavSongSlice.name)
-  const SongsLists = SongsList()
-  const NowPlaySong = useSelector((state)=>state.CurrentSongSlice.songname)
-
+  const currentsoung = useSelector((state)=>state.CurrentSongSlice.currentsoung)  // get current play song id
+  const NowPlaySong = useSelector((state)=>state.CurrentSongSlice.songname) 
+  const Rdx_IsPlay = useSelector((state)=>state.CurrentSongSlice.IsPlay)  //main veriable contral  Contral Song play
+  const dispath = useDispatch() // use for the set user seleceted song add to play
 
   useEffect(()=>{
     const temlist = SongsList()
     const favlist = temlist.filter((ele)=> favsong.includes(ele.id))
+   
     setfavsonglist(favlist)
   },[favsong])
 
-
+  const userSelectSong = (id) =>{ //this funtion use for this use select song control
+    dispath(GoableSongPlay(true))
+    dispath(setcurrentsoungslice(id))
+    dispath(setIsPlayTrueFalse(true))
+    
+  }
 
   return (
     <div className="p-8 relative">
@@ -76,6 +85,7 @@ const ScrollAreas = () => {
                 {SongsLists.map((song,index)=>(
                       <div
                       key={index}
+                      onClick={()=>userSelectSong(song.id)}
                       className={`flex items-center gap-4 p-2 rounded-lg hover:bg-white/5 ${NowPlaySong == song.id ? "bg-gradient-to-r from-blue-600/55  to-black-600 border-2 border-r-emerald-100" : null}`}>
                       <div className="w-6 text-center text-zinc-400">{index + 1}</div>
                       <div className="w-12 h-12 bg-zinc-800 rounded">
@@ -92,6 +102,7 @@ const ScrollAreas = () => {
                       </div>
                       
                       <div className="text-zinc-400">{song.duration || "4:00"}</div>
+                      {/* { favsongslist[index].includes()} */}
                       <Button variant="ghost" size="icon">
                         <Heart className="w-4 h-4" />
                       </Button>
