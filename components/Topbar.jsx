@@ -34,13 +34,20 @@ const Topbar = () => {
       <Bell className="w-5 h-5" />
     </Button>
     <div className="flex items-center gap-2">
-      <Avatar className="w-8 h-8">
-        <AvatarImage src="/placeholder.svg" />
+      <div className='relative' >
+      <Avatar className="w-8 h-8 ">
+        <AvatarImage src={`/profile/hashan.jpg`} />
         <AvatarFallback>HC</AvatarFallback>
+      
       </Avatar>
+      <div className=' absolute top-0 right-0 rounded-full border-1 animate-ping border-white bg-green-500 p-1'></div>
+      </div>
+    
+   
       <div className="text-sm">
         <div>Hashan Chanaka</div>
-        <div className="text-xs text-zinc-400">Premium 👑</div>
+
+        <div className="text-xs text-zinc-400 ">Premium 👑</div>
       </div>
     </div>
   </div>
