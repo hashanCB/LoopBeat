@@ -128,7 +128,7 @@ useEffect(()=>{
         <AvatarFallback>HC</AvatarFallback>
       
       </Avatar>
-      <div className=' absolute top-0 right-0 rounded-full border-1 animate-ping border-white bg-green-500 p-1'></div>
+      <div className=' absolute top-0 right-0 rounded-full border-1 animate-ping  border-white bg-green-500 p-1'></div>
       </div>
     
    
