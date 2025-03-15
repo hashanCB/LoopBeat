@@ -48,9 +48,9 @@ const ScrollAreas = () => {
     const addSongSlice = (e,songid) =>{
       e.stopPropagation(); 
       const temp = favsong.includes(songid)
-      
-      if (!temp ) { dispath(addsong(SongsLists[currentsoung].id) ) }
-      else { dispath( removesong(SongsLists[currentsoung].id)) }
+     
+      if (!temp ) { dispath(addsong(songid) ) }
+      else { dispath( removesong(songid)) }
       SetIsfav(!isfav)
       
     }
@@ -126,7 +126,7 @@ const ScrollAreas = () => {
                          
                           <Button onClick={(e)=>{
                                                
-                                                addSongSlice(e,song.id) }} variant={favsongslist && favsongslist.some((ele)=> ele.id === song.id)? "ploop" : "ghost"} size="icon">
+                            addSongSlice(e,song.id) }} variant={favsongslist && favsongslist.some((ele)=> ele.id === song.id)? "ploop" : "ghost"} size="icon">
   
                             <Heart className="w-4 h-4" />
                           </Button> 
