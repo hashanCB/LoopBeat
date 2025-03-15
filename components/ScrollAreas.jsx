@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea , ScrollBar } from "@/components/ui/scroll-area"
 
 import SongsList from '@/app/Data/SongsList'
 
@@ -12,7 +12,7 @@ import Image from "next/image"
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setcurrentsoungslice, setIsPlay, setIsPlayTrueFalse } from '@/app/Redux/CurrentSongSlice'
-import { GoableSongPlay } from '@/app/Redux/FavSongSlice'
+import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
 
 
 
@@ -20,6 +20,8 @@ const ScrollAreas = () => {
   const SongsLists = SongsList()
 
   const [favsongslist,setfavsonglist] = useState()
+    const [isfav,SetIsfav]= useState(false)
+
   //readux store call
   const favsong = useSelector((state)=>state.FavSongSlice.name)
   const currentsoung = useSelector((state)=>state.CurrentSongSlice.currentsoung)  // get current play song id
@@ -42,22 +44,37 @@ const ScrollAreas = () => {
     
   }
 
+
+    const addSongSlice = (e,songid) =>{
+      e.stopPropagation(); 
+      const temp = favsong.includes(songid)
+      
+      if (!temp ) { dispath(addsong(SongsLists[currentsoung].id) ) }
+      else { dispath( removesong(SongsLists[currentsoung].id)) }
+      SetIsfav(!isfav)
+      
+    }
+
+
   return (
     <div className="p-8 relative">
-   
-            <div className="mb-8 ">
+      
+            <div className="mb-8  ">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">VibeShelf 🎧 – A shelf for your favorite vibes  </h2>
                 <Button variant="link" className="text-green-500">
                   See All
                 </Button>
               </div>
-           
-              <div className="grid grid-cols-6 gap-4">
-             
+            
+              <ScrollArea className="w-[1400px]">
+                
+         
+              <div className="flex gap-4 rounded-lg  w-max ">
+          
               {  favsongslist && favsongslist.map((album, i) => (
-                  <div key={i} className="space-y-2">
-                    <div className="aspect-square relative bg-zinc-800 rounded-lg overflow-hidden">
+                  <div key={i} className="space-y-2 ">
+                    <div className="aspect-square relative bg-zinc-800 rounded-lg overflow-hidden w-[200px] h-[200px]">
                       <Image
                         src={album.cover}
                         alt={album.cover}
@@ -76,13 +93,15 @@ const ScrollAreas = () => {
                   </div>
                 ))}
               </div>
+              <ScrollBar orientation="horizontal" />
+              </ScrollArea>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Popular Song</h2>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 h-full pb-20">
                 {SongsLists.map((song,index)=>(
                       <div
                       key={index}
@@ -105,7 +124,9 @@ const ScrollAreas = () => {
                       <div className="text-zinc-400">{song.duration || "4:00"}</div>
                       
                          
-                          <Button variant={favsongslist && favsongslist.some((ele)=> ele.id === song.id)? "ploop" : "ghost"} size="icon">
+                          <Button onClick={(e)=>{
+                                               
+                                                addSongSlice(e,song.id) }} variant={favsongslist && favsongslist.some((ele)=> ele.id === song.id)? "ploop" : "ghost"} size="icon">
   
                             <Heart className="w-4 h-4" />
                           </Button> 

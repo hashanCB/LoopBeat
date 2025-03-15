@@ -34,12 +34,12 @@ export default function MusicApp() {
         <BottomPlayer/>
     
       </div>
-      <div className='absolute bottom-24 right-0   '>
+      <div className='absolute bottom-24 right-0 hover:hidden visible '>
                {GobleSongPlay &&   
              
 
                 <motion.div
-                    className="w-full"
+                    className="w-full  "
                     initial={{ opacity: 0 }} // Initial state: invisible
                     animate={{ opacity: 1 }} // Animate to full opacity
                     exit={{ opacity: 0 }} // Fade out when removed
