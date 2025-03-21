@@ -1,6 +1,7 @@
 # 🎵 LoopBeat - Education & Testing Purpose
 <img width="1438" alt="Screenshot 2025-03-21 at 04 16 42" src="https://github.com/user-attachments/assets/a49d8193-6c41-429f-90cc-55441c716baf" />
 
+
 This project is an **educational and testing purpose** website built using **Next.js**, **React**, and **various React tools**. It features a **song player UI** with interactive functionality and smooth animations.
 
 ## 🚀 Features
