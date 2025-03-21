@@ -10,5 +10,6 @@ export const store = configureStore({
 reducer:{
     FavSongSlice:FavSongSlice.reducer,
     CurrentSongSlice:CurrentSongSlice.reducer
+
 }
 })

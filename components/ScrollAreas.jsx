@@ -18,9 +18,10 @@ import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
 
 const ScrollAreas = () => {
   const SongsLists = SongsList()
-
-  const [favsongslist,setfavsonglist] = useState()
+    const [SongListData,setSongListData] = useState(SongsList())
+    const [favsongslist,setfavsonglist] = useState()
     const [isfav,SetIsfav]= useState(false)
+
 
   //readux store call
   const favsong = useSelector((state)=>state.FavSongSlice.name)
@@ -29,18 +30,48 @@ const ScrollAreas = () => {
   const Rdx_IsPlay = useSelector((state)=>state.CurrentSongSlice.IsPlay)  //main veriable contral  Contral Song play
   const dispath = useDispatch() // use for the set user seleceted song add to play
 
+  //songlist get for DAta file
+  const temlist = SongsList()
+
   //after render redux pass Favsong List and call this useEffeact and set values to favsongslist state
   useEffect(()=>{
-    const temlist = SongsList()
-    const favlist = temlist.filter((ele)=> favsong.includes(ele.id))
-    console.log("favlist",favlist)
+    const favlist = SongListData.filter((ele)=> favsong.includes(ele.id))
     setfavsonglist(favlist)
   },[favsong])
+
+  
 
   const userSelectSong = (id) =>{ //this funtion use for this use select song control
     dispath(GoableSongPlay(true))
     dispath(setcurrentsoungslice(id))
     dispath(setIsPlayTrueFalse(true))
+
+     //use this favsonglist re-order current play come up 1st
+       let currentplayindex = favsongslist.findIndex((value)=> value.id === id)
+       let down_currentplayindex = SongListData.findIndex((value)=> value.id === id)
+
+     
+    
+       if(currentplayindex !== -1){
+         let currentplayvalues = favsongslist.find((value)=> value.id === id)
+         let temparry = [...favsongslist]
+         temparry.splice(currentplayindex,1)
+         temparry.unshift(currentplayvalues)
+         setfavsonglist(temparry)
+        
+       }
+
+
+       if(down_currentplayindex !== -1){
+        let down_currentplayindexvalues = SongListData.find((value)=> value.id === id)
+        let temparry_Song = [...SongListData]
+       
+        temparry_Song.splice(down_currentplayindex,1)
+   
+        temparry_Song.unshift(down_currentplayindexvalues)
+        setSongListData(temparry_Song)
+
+      }
     
   }
 
@@ -74,7 +105,7 @@ const ScrollAreas = () => {
           
               {  favsongslist && favsongslist.map((album, i) => (
                   <div key={i} className="space-y-2 ">
-                    <div className="aspect-square relative bg-zinc-800 rounded-lg overflow-hidden w-[200px] h-[200px]">
+                    <div  onClick={()=>userSelectSong(album.id)}  className=" cursor-pointer aspect-square relative bg-zinc-800 rounded-lg overflow-hidden w-[200px] h-[200px]">
                       <Image
                         src={album.cover}
                         alt={album.cover}
@@ -102,7 +133,7 @@ const ScrollAreas = () => {
                 <h2 className="text-xl font-bold">Popular Song</h2>
               </div>
               <div className="space-y-2 h-full pb-20">
-                {SongsLists.map((song,index)=>(
+                {SongListData.map((song,index)=>(
                       <div
                       key={index}
                       onClick={()=>userSelectSong(song.id)}
