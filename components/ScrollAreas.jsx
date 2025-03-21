@@ -73,7 +73,7 @@ const ScrollAreas = () => {
         temparry_Song.unshift(down_currentplayindexvalues)
         dispath(setReOrder(temparry_Song))
         dispath(setcurrentsoungslice(0))
-        console.log(currentsoung)
+       
 
       }
     

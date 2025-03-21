@@ -48,7 +48,7 @@ const BottomPlayer = () => {
   const dispath = useDispatch()
   
   useEffect(()=>{
-    console.log("bottonlist",SongsLists)
+   
   },[SongsLists])
 
   const addSongSlice = () =>{
@@ -127,7 +127,7 @@ const BottomPlayer = () => {
   }
   //run every time reander
   useEffect(()=>{
-    console.log("currentsoung",currentsoung)
+   
     dispath(NowPlaying(currentsoung))
     Rdx_IsPlay ? dispath(GoableSongPlay(true)) : dispath(GoableSongPlay(false)) 
     isfavsong()
