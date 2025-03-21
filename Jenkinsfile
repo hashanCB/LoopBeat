@@ -51,20 +51,11 @@ pipeline {
         stage('Increment Version') {
             steps {
                 script {
-                    // Increment package version
-                    sh 'npm version patch --no-git-tag-version'
-
-                    // Ensure Jenkins reads the updated file
-                    sleep(2)
-
-                    // Read updated package.json and extract the version correctly
-                    env.VERSION = sh(script: "node -p \"require('./package.json').version\"", returnStdout: true).trim()
-
-                    echo "New version: ${env.VERSION}"
+                        gv.GitIncrementVersion()
                 }
             }
         }
-
+ 
 
 
 
