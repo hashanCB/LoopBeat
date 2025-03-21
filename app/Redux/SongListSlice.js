@@ -10,10 +10,12 @@ export const SongListSlice = createSlice({
     name:"SongListSlice",
     initialState,
     reducers:{
-
+        setReOrder:(state,action)=>{
+            state.SongsLists = action.payload
+        }
     }
 })
 
 
 export default SongListSlice.reducer
-//export const {} = SongListSlice.actions
+export const { setReOrder} = SongListSlice.actions

@@ -17,7 +17,7 @@ import {
 import { Slider } from "@/components/ui/slider"
 import Image from "next/image"
 import ReactHowler from "react-howler";
-import SongsList from '@/app/Data/SongsList'
+//import SongsList from '@/app/Data/SongsList'
 import { useDispatch, useSelector } from 'react-redux'
 import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
 import { addcurrentsoung, NowPlaying, removecurrentsoung, resetcurrentsoung, setcurrentsoungslice, setIsPlay, setIsPlayTrueFalse } from '@/app/Redux/CurrentSongSlice'
@@ -33,7 +33,7 @@ const BottomPlayer = () => {
   const [duration,setduration] = useState(0)
   const [fulltimeducation , setfulltimeducation] = useState()
   const [remmeingtime , setremmeingtime] = useState(0)
-  const SongsLists = SongsList()
+  //const SongsLists = SongsList()
 
   const [volums,setVolums] = useState(0.5)
   const [ProcessBarvolums,setrocessBarVolums] = useState(0)
@@ -41,11 +41,15 @@ const BottomPlayer = () => {
   const [isfav,SetIsfav]= useState(false)
 
   //redux
+  const SongsLists = useSelector((state)=>state.SongListSlice.SongsLists) //get Song List
   const favsong = useSelector((state)=>state.FavSongSlice.name)
   const Rdx_IsPlay = useSelector((state)=>state.CurrentSongSlice.IsPlay)  //main veriable contral  Contral Song play
   const currentsoung = useSelector((state)=>state.CurrentSongSlice.currentsoung)
   const dispath = useDispatch()
- 
+  
+  useEffect(()=>{
+    console.log("bottonlist",SongsLists)
+  },[SongsLists])
 
   const addSongSlice = () =>{
     const temp = favsong.includes(SongsLists[currentsoung].id)
@@ -123,6 +127,7 @@ const BottomPlayer = () => {
   }
   //run every time reander
   useEffect(()=>{
+    console.log("currentsoung",currentsoung)
     dispath(NowPlaying(currentsoung))
     Rdx_IsPlay ? dispath(GoableSongPlay(true)) : dispath(GoableSongPlay(false)) 
     isfavsong()
@@ -135,6 +140,7 @@ const BottomPlayer = () => {
     SongCount = SongCount - 1
     if ( currentsoung < SongCount){
       dispath(addcurrentsoung())
+     
      
     }else{
       dispath(resetcurrentsoung()) }
