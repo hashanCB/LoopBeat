@@ -13,17 +13,19 @@ import Image from "next/image"
 import { useDispatch, useSelector } from 'react-redux'
 import { setcurrentsoungslice, setIsPlay, setIsPlayTrueFalse } from '@/app/Redux/CurrentSongSlice'
 import { addsong, GoableSongPlay, removesong } from '@/app/Redux/FavSongSlice'
+import { setReOrder } from '@/app/Redux/SongListSlice'
 
 
 
 const ScrollAreas = () => {
-  const SongsLists = SongsList()
-    const [SongListData,setSongListData] = useState(SongsList())
+  
+   // const [SongListData,setSongListData] = useState(SongsList())
     const [favsongslist,setfavsonglist] = useState()
     const [isfav,SetIsfav]= useState(false)
 
-
+    
   //readux store call
+  const SongListData = useSelector((state)=>state.SongListSlice.SongsLists) //get Song List
   const favsong = useSelector((state)=>state.FavSongSlice.name)
   const currentsoung = useSelector((state)=>state.CurrentSongSlice.currentsoung)  // get current play song id
   const NowPlaySong = useSelector((state)=>state.CurrentSongSlice.songname) 
@@ -67,9 +69,11 @@ const ScrollAreas = () => {
         let temparry_Song = [...SongListData]
        
         temparry_Song.splice(down_currentplayindex,1)
-   
+       
         temparry_Song.unshift(down_currentplayindexvalues)
-        setSongListData(temparry_Song)
+        dispath(setReOrder(temparry_Song))
+        dispath(setcurrentsoungslice(0))
+        console.log(currentsoung)
 
       }
     
@@ -137,7 +141,7 @@ const ScrollAreas = () => {
                       <div
                       key={index}
                       onClick={()=>userSelectSong(song.id)}
-                      className={`flex items-center gap-4 p-2 rounded-lg hover:bg-white/5 ${NowPlaySong == song.id ? "bg-gradient-to-r from-blue-600/55  to-black-600 border-2 border-r-emerald-100" : null}`}>
+                      className={`flex items-center gap-4 p-2 rounded-lg hover:bg-white/5 ${NowPlaySong == index ? "bg-gradient-to-r from-blue-600/55  to-black-600 border-2 border-r-emerald-100" : null}`}>
                       <div className="w-6 text-center text-zinc-400">{index + 1}</div>
                       <div className="w-12 h-12 bg-zinc-800 rounded">
                         <Image
