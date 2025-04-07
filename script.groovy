@@ -14,7 +14,7 @@ def BuildProject() {
 }
 
 def GitCommit(){
-        withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) { //github access key need to get anf  after jenkins cedination add username and password(key)
+        withCredentials([usernamePassword(credentialsId: 'macosweb', passwordVariable: 'PASS', usernameVariable: 'USER')]) { //github access key need to get anf  after jenkins cedination add username and password(key)
                         sh '''
                         git config --global user.email "jenkins@hashan.com"
                         git config --global user.name "Jenkins"
