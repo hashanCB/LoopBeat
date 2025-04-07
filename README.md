@@ -43,6 +43,8 @@ This project is an **educational and testing purpose** website built using **Nex
 - **Redux** - State management for player & favorites
 - **React Three Fiber & @react-three/drei** - 3D model rendering
 - **Docker** - To containerize the application
+<img width="1440" alt="425652273-935e507c-74af-43db-a793-5c96aabfefcd" src="https://github.com/user-attachments/assets/085460c6-932b-45db-b2a1-2aed38b87f2f" />
+
 
 ## 📦 Setup & Installation
 
